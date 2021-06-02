@@ -44,4 +44,5 @@ exports.getTablesNames = this.getTablesNames = async (client) => {
             return res
         }
     })
+    return result
 }
