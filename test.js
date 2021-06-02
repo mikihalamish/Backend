@@ -55,9 +55,24 @@ app.post('/tables', async (req, res) => {
         password: 'Bsmch@500K!',
         port: 5432
     });
-    let result = await DBFunctions.getTablesNames(client)
-    console.log(result)
-    res.send(result)
+    //let result = await DBFunctions.getTablesNames(client)
+     
+    await client.connect((err) => console.log(err))
+    await client.query(query, (err, result) => {
+        if(err) {
+            console.log("ERROR -> " + err);
+            return "ERROR"
+        }
+        else {
+          /*  client.end()
+            console.log("JORDI")
+            console.log(res)
+            console.log(res.rows) */
+          console.log(result)
+          res.send(result)
+        }
+    })
+  
 })
 
 const server = app.listen(8080, () => {
