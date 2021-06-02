@@ -56,7 +56,7 @@ app.post('/tables', async (req, res) => {
         port: 5432
     });
     //let result = await DBFunctions.getTablesNames(client)
-     
+    const query = `select * from public.users`
     await client.connect((err) => console.log(err))
     await client.query(query, (err, result) => {
         if(err) {
