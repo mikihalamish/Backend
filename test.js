@@ -69,7 +69,7 @@ app.post('/tables', async (req, res) => {
             console.log(res)
             console.log(res.rows) */
           console.log(result)
-          res.send(result)
+          res.send(result.rows)
         }
     })
   
