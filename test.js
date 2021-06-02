@@ -40,7 +40,7 @@ app.post('/tables', async (req, res) => {
         password: 'Bsmch@500K!',
         port: 5432
     });
-    const query = `select * from public.${req.body.dbName}`
+    const query = `select * from public.users`
     await client.connect((err) => console.log(err))
     await client.query(query, (err, result) => {
         if(err) {
