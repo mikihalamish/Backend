@@ -23,8 +23,8 @@ app.post('/connect', (req, res) => {
     console.log("connect -> " + req.body.dbName)
     client = new Client({
         user: 'ron',
-        host: //req.body.ip,
-        database: //req.body.dbName,
+        host: req.body.ip,
+        database: req.body.dbName,
         password: 'Bsmch@500K!',
         port: 5432
     });
@@ -32,8 +32,29 @@ app.post('/connect', (req, res) => {
     res.send(true)
 })
 
+app.post('/tables', async (req, res) => {
+    client = new Client({
+        user: 'ron',
+        host: req.body.ip,
+        database: req.body.dbName,
+        password: 'Bsmch@500K!',
+        port: 5432
+    });
+    const query = `select * from public.${req.body.dbName}`
+    await client.connect((err) => console.log(err))
+    await client.query(query, (err, result) => {
+        if(err) {
+            console.log("ERROR -> " + err);
+            return "ERROR"
+        }
+        else {
+          res.send(result.rows)
+        }
+    })
+  
+})
+
 app.get('/create', (req, res) => {
-    //console.log("create -> " + req.body.dbName)
     //DBFunctions.createTable(client, req.body.tableName, req.body.cols)
     client = new Client({
         user: 'ron',
@@ -45,34 +66,6 @@ app.get('/create', (req, res) => {
     DBFunctions.createTable(client, "", "")
     res.header( "Access-Control-Allow-Origin" );
     res.send("Table created Successfully")
-})
-
-app.post('/tables', async (req, res) => {
-    client = new Client({
-        user: 'ron',
-        host: '172.30.92.221',//req.body.ip,
-        database: 'demodb',//req.body.dbName,
-        password: 'Bsmch@500K!',
-        port: 5432
-    });
-    //let result = await DBFunctions.getTablesNames(client)
-    const query = `select * from public.users`
-    await client.connect((err) => console.log(err))
-    await client.query(query, (err, result) => {
-        if(err) {
-            console.log("ERROR -> " + err);
-            return "ERROR"
-        }
-        else {
-          /*  client.end()
-            console.log("JORDI")
-            console.log(res)
-            console.log(res.rows) */
-          console.log(result)
-          res.send(result.rows)
-        }
-    })
-  
 })
 
 const server = app.listen(8080, () => {
