@@ -56,6 +56,7 @@ app.post('/tables', async (req, res) => {
         port: 5432
     });
     let result = await DBFunctions.getTablesNames(client)
+    console.log(result)
     res.send(result)
 })
 
