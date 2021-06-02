@@ -31,7 +31,7 @@ exports.getTablesNames = this.getTablesNames = async (client) => {
     const query = `select * from public.users` //`SELECT table_name FROM information_schema.tables
                   //    WHERE table_schema='public'`
     let r = await client.connect((err) => console.log(err))
-    let result = await client.query(query, (err, res) => {
+    return await client.query(query, (err, res) => {
         if(err) {
             console.log("ERROR -> " + err);
             return "ERROR"
@@ -44,6 +44,4 @@ exports.getTablesNames = this.getTablesNames = async (client) => {
             return res
         }
     })
-    console.log(result)
-    return result
 }
